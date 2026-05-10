@@ -13,7 +13,7 @@ class Video extends CI_Controller
 
     public function index()
 	{
-		$data['videos']=$this->db->query("select * from videos")->result();
+		$data['videos']=$this->db->query("select * from videos where isdeleted=0")->result();
 		$this->load->view('layouts/header_admin');
 		$this->load->view('admin/videos',$data);
 		$this->load->view('layouts/footer');
@@ -36,7 +36,8 @@ class Video extends CI_Controller
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'file_name' => $upload['file_name'],
-				'created_by' => $this->session->userdata('id_user')
+				'created_by' => $this->session->userdata('id_user'),
+				'isdeleted' => 0
 			];
 			$this->db->insert('videos', $data);
 			redirect('video');
@@ -44,6 +45,15 @@ class Video extends CI_Controller
 
 			echo $this->upload->display_errors();
 		}
+	}
+	public function delete($id)
+	{
+		$video = $this->db->get_where('videos', ['id' => $id])->row();
+		if ($video) {
+			$this->db->where('id', $id);
+			$this->db->update('videos', ['isdeleted' => 1]);
+		}
+		redirect('video');
 	}
 	
 }

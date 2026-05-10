@@ -27,7 +27,6 @@
                         <video width="200" controls> <source src="<?= base_url('uploads/videos/'.$v->file_name) ?>"> </video>
                     </td>
                     <td class="border p-2 text-center">
-                        <a href="<?= base_url('video/edit/'.$v->id) ?>" class="bg-yellow-500 text-white px-3 py-1 rounded"> Edit </a>
                         <a href="<?= base_url('video/delete/'.$v->id) ?>" onclick="return confirm('Hapus video?')" class="bg-red-600 text-white px-3 py-1 rounded"> Hapus </a>
                     </td>
                 </tr>
